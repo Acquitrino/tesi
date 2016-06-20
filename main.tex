@@ -1,0 +1,89 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{geometry}
+\usepackage{subcaption}
+
+\geometry{a4paper,top=3cm,bottom=3cm,left=1.5cm,right=3.5cm,%
+heightrounded,bindingoffset=5mm}
+%\usepackage{multirow}
+\usepackage[utf8]{inputenc} %invece di \usepackage[latin1]{inputenc}
+							%per caratteri accentati
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage[svgnames]{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{algorithm}
+\usepackage{pseudocode}
+\usepackage[noend]{algpseudocode}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+
+
+
+\usepackage{fancyvrb}
+
+\RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}
+{fontsize=\tiny,
+ frame=lines,  % top and bottom rule only
+ framesep=1.5em, % separation between frame and text
+ label=\fbox{output.txt},
+ labelposition=topline,
+ commandchars=\|\(\),
+}
+
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+%LOGO UNIPD
+%\usepackage{eso-pic}
+%\AddToShipoutPictureBG*{%
+%  \AtTextUpperLeft{\makebox[\textwidth][r]{%
+%    \includegraphics[width=3cm,height=2cm]{logodei.jpg}}}}
+
+%AUTHORS
+\begin{document}
+\begin{itemize}
+\item[ ]\textbf{Alberton Federico     matr.1106814}
+\end{itemize}
+\begin{center}
+
+%TITLE
+\Huge \textbf{Piano di lavoro tesi e note varie}\\ 
+\normalsize{Giugno 2016}
+\end{center}
+
+\section{Obiettivi}
+Andrò a modificare e testare l'algoritmo HotNet2 per poter lavorare nel caso in cui la matrice di mutazione genica non sia più essere binaria ma costituita da valori reali all'interno dell'intervallo [0,1].\\
+Attualmente sono state pensate alcune modifiche da provare che verranno qui di seguito descritte brevemente come promemoria per il sottoscritto.\\
+Per ora le prime idee vanno a modificare il peso che viene dato al vettore $\vec{h}$ e talvolta viene anche modificata la matrice di mutazione genica.
+
+\subsection{L'idea Naive}
+La prima idea è quella di ricondurre la matrice da reale a binaria utilizzando un soglia y in modo tale che tutti i valori al di sotto di tale soglia siano impostati a 0 ed i restanti ad 1.
+
+\subsection{La modifica del peso}
+La seconda idead è quella di modificare il peso iniziale della singola componente del vettore $\vec{h}$ ovvero per ogni singolo gene $g_i$ si va a modificare il valore $\vec{h_g}$ con la seguente formula:\bigskip\\ 
+\begin{center}
+$\vec{h_{g_i}} = \tfrac{\sum_{k=0}^{N-1} g_{i,k}} {|S|}$\bigskip\\
+\end{center}
+dove son S si intende l'insieme dei sample e con $g_{i,k}$ il valore che si trova sulla matrice genica relativo al paziente k e al gene $g_i$.
+
+\subsection{La funzione di premio premio}
+Quest'idea reutilizza il principio della soglia abbinandola ad una versione modificata dell'idea naive.\\
+Come prima setto a 0 tutti i geni il cui valore non si discosta troppo dal BMR secondo una soglia $y_{BMR}$, i rimanenti geni rimarranno con il loro valore e tale valore andrà in oltre modulato tramite una funzione $P(f)$ direttamente proporzionale alla frequenza di mutazione il cui scopo è quello di premiare le mutazioni che sono più significative. Infine il premio relativo al gene $g_i$ è quello relativo alla somma dei premi relativi sempre al gene $g_i$ di tutti i pazienti che non sono stati filtrati dalla precedente soglia.\\
+La funzione $P(f)$ potrebbe essere di tipo esponenziale. Altra ipotesi da valutare potrebbe essere quella di basare $P(f)$ su parametri quali la media e la varianza delle mutazioni del singolo gene sull'insieme S dei pazienti valori che sono direttamente calcolabili dai dati.
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
